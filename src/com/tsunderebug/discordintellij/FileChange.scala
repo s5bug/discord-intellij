@@ -6,12 +6,13 @@ import com.tsunderebug.drpc.RichPresence
 class FileChange extends FileEditorManagerListener {
 
   override def selectionChanged(event: FileEditorManagerEvent): Unit = {
-    val lowercaseName = event.getNewFile.getFileType.getName.dropRight(Math.max(event.getNewFile.getFileType.getName.indexOf(' ') + 1, 0)).toLowerCase
+    val name = event.getNewFile.getFileType.getName
+    val lowercaseName = name.split("""\s""").head.toLowerCase
     RichPresence(
       state = s"Working on ${event.getManager.getProject.getName}",
       largeImageKey = lowercaseName,
-      largeImageText = s"Editing a ${event.getNewFile.getFileType.getName} file",
-      details = s"Editing [${event.getNewFile.getFileType.getName}] ${event.getNewFile.getName}"
+      largeImageText = s"Editing a $name file",
+      details = s"Editing [$name] ${event.getNewFile.getName}"
     ).submit()
   }
 
