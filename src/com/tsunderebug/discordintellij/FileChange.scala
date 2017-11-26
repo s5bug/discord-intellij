@@ -7,7 +7,7 @@ import com.tsunderebug.drpc.RichPresence
 class FileChange extends FileEditorManagerListener {
 
   override def selectionChanged(event: FileEditorManagerEvent): Unit = {
-    val name = event.getNewFile.getFileType.getName
+    val name = try event.getNewFile.getFileType.getName catch {case _: NullPointerException => "Text"}
     val lowercaseName = name.split("""\s""").head.toLowerCase
     val ide = ApplicationInfo.getInstance.getBuild.asString.substring(0, 2).toLowerCase
     RichPresence(
