@@ -1,0 +1,35 @@
+<idea-plugin>
+  <id>com.tsunderebug.discordintellij</id>
+  <name>IntelliJ Discord Integration</name>
+  <version>1.1</version>
+  <vendor email="tsunderebug@tsunderebug.com" url="https://www.github.com/TsundereBug">Anthony Cerruti</vendor>
+
+  <description><![CDATA[
+      Adds rich presence integration to IntelliJ.
+      Doesn't support your language? Request it via <a href="https://goo.gl/forms/8DDDUZ8QcOvZQLXm1">this form</a>.
+    ]]></description>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity implementation="com.tsunderebug.discordintellij.ProjectChange" />
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+  <application-components>
+    <component>
+      <implementation-class>com.tsunderebug.discordintellij.StartupShutdown</implementation-class>
+    </component>
+  </application-components>
+
+</idea-plugin>
