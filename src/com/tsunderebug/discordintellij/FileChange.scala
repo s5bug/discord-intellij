@@ -1,5 +1,6 @@
 package com.tsunderebug.discordintellij
 
+import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.fileEditor.{FileEditorManagerEvent, FileEditorManagerListener}
 import com.tsunderebug.drpc.RichPresence
 
@@ -12,7 +13,10 @@ class FileChange extends FileEditorManagerListener {
       state = s"Working on ${event.getManager.getProject.getName}",
       largeImageKey = lowercaseName,
       largeImageText = s"Editing a $name file",
-      details = s"Editing [$name] ${event.getNewFile.getName}"
+      smallImageKey = "logo",
+      smallImageText = s"Using IntelliJ IDEA ${ApplicationInfo.getInstance.getBuild.asString}",
+      details = s"Editing [$name] ${event.getNewFile.getName}",
+      startTimestamp = System.currentTimeMillis() / 1000
     ).submit()
   }
 
