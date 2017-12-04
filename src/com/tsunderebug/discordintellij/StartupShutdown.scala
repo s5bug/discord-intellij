@@ -8,22 +8,25 @@ class StartupShutdown extends ApplicationComponent {
 
   override def initComponent(): Unit = {
     RichPresence.start("384215522050572288")
+    val code = ApplicationInfo.getInstance().getBuild.asString().take(2).toLowerCase
     RichPresence(
-      state = s"In IDE ${getIDEName(ApplicationInfo.getInstance().getBuild.asString())}",
-      details = s"${ApplicationInfo.getInstance().getApiVersion}"
+      state = s"In IDE ${getIDEName(code)}",
+      details = s"${ApplicationInfo.getInstance().getApiVersion}",
+      largeImageKey = code,
+      largeImageText = ApplicationInfo.getInstance().getBuild.asString()
     ).submit()
   }
 
-  def getIDEName(bn: String): String = {
-    val code = bn.take(2).toLowerCase
+  def getIDEName(code: String): String = {
     code match {
       case "ic" | "iu" => "IntelliJ"
-      case "py" => "PyCharm"
+      case "py" | "pc" => "PyCharm"
       case "rm" => "RubyMine"
       case "go" => "GoLand"
       case "cl" => "CLion"
       case "ps" => "PhpStorm"
       case "ws" => "WebStorm"
+      case _ => s"[Unknown IDE ${code.toUpperCase}]"
     }
   }
 

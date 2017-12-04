@@ -11,7 +11,7 @@ class FileChange extends FileEditorManagerListener {
       case Some(file) =>
         val name = file.getFileType.getName
         val lowercaseName = name.split("""\s""").head.toLowerCase
-        val ide = ApplicationInfo.getInstance.getBuild.asString.substring(0, 2).toLowerCase
+        val ide = ApplicationInfo.getInstance.getBuild.asString.take(2).toLowerCase
         RichPresence(
           state = s"Working on ${event.getManager.getProject.getName}",
           largeImageKey = lowercaseName,
@@ -22,10 +22,13 @@ class FileChange extends FileEditorManagerListener {
           startTimestamp = System.currentTimeMillis() / 1000
         ).submit()
       case None =>
+        val code = ApplicationInfo.getInstance().getBuild.asString().take(2).toLowerCase
         RichPresence(
           state = s"Idling",
           details = s"In ${event.getManager.getProject.getName}",
-          startTimestamp = System.currentTimeMillis() / 1000
+          startTimestamp = System.currentTimeMillis() / 1000,
+          largeImageKey = code,
+          largeImageText = ApplicationInfo.getInstance().getBuild.asString()
         ).submit()
     }
 
