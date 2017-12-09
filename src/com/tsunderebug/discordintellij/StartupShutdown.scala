@@ -20,7 +20,7 @@ class StartupShutdown extends ApplicationComponent {
   def getIDEName(code: String): String = {
     code match {
       case "ic" | "iu" => "IntelliJ"
-      case "py" | "pc" => "PyCharm"
+      case "py" | "pc" | "pe" => "PyCharm"
       case "rm" => "RubyMine"
       case "go" => "GoLand"
       case "cl" => "CLion"
