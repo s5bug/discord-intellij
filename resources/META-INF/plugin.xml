@@ -22,7 +22,10 @@
   </extensions>
 
   <actions>
-    <!-- Add your actions here -->
+    <group id="DiscordIntellij.ActionsMenu" text="_Discord" description="Discord actions">
+      <add-to-group group-id="MainToolBar" anchor="last" />
+      <action class="com.tsunderebug.discordintellij.ToggleAction" id="discord.Toggle" text="_Toggle" description="Toggle RPC for this project" icon="/icons/enabled.png" />
+    </group>
   </actions>
 
   <application-components>
