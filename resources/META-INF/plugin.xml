@@ -1,12 +1,20 @@
 <idea-plugin>
   <id>com.tsunderebug.discordintellij</id>
   <name>IntelliJ Discord Integration</name>
-  <version>1.4.1</version>
+  <version>1.5</version>
   <vendor email="tsunderebug@tsunderebug.com" url="https://www.github.com/TsundereBug">Anthony Cerruti</vendor>
 
   <description><![CDATA[
       Adds rich presence integration to IntelliJ.
       Doesn't support your language? Request it via <a href="https://goo.gl/forms/8DDDUZ8QcOvZQLXm1">this form</a>.
+
+      Features:
+      <ul>
+        <li>What file you're editing, what language you're using, and what IDE you prefer will now be shown in Discord!</li>
+        <li>You can see how long since you started working on a project!</li>
+        <li>"What if my project is a surprise or I'm under an NDA?" You can disable the Rich Presence from showing per-project!</li>
+        <li>Amazing flat icons mainly created by <a href="http://github.com/HelloWorld017/">HelloWorld017</a>.</li>
+      </ul>
     ]]></description>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
