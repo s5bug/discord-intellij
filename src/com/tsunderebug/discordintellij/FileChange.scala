@@ -17,7 +17,7 @@ class FileChange extends FileEditorManagerListener {
           largeImageKey = lowercaseName,
           largeImageText = s"Editing a $name file",
           smallImageKey = ide,
-          smallImageText = s"Using ${getIDEName(ide)} version ${ApplicationInfo.getInstance.getBuild.asString}",
+          smallImageText = s"Using ${ApplicationInfo.getInstance().getVersionName}",
           details = s"Editing [$name] ${file.getName}",
           startTimestamp = System.currentTimeMillis() / 1000
         ).submit()
@@ -28,7 +28,7 @@ class FileChange extends FileEditorManagerListener {
           details = s"In ${event.getManager.getProject.getName}",
           startTimestamp = System.currentTimeMillis() / 1000,
           largeImageKey = code,
-          largeImageText = getIDEName(code)
+          largeImageText = ApplicationInfo.getInstance().getVersionName
         ).submit()
     }
 

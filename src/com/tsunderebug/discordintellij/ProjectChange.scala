@@ -16,7 +16,7 @@ class ProjectChange extends StartupActivity {
       state = s"Opened ${project.getName}",
       details = s"${ApplicationInfo.getInstance().getApiVersion}",
       largeImageKey = code,
-      largeImageText = getIDEName(code)
+      largeImageText = ApplicationInfo.getInstance().getVersionName
     ).submit()
   }
 
