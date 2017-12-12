@@ -11,9 +11,9 @@ class ToggleAction extends AnAction {
     val pe = a.getProject.getComponent[PresenceEnabled](classOf[PresenceEnabled], new PresenceEnabled())
     pe match {
       case PresenceEnabled(true) =>
+        hideRPC()
         pe.loadState(PresenceEnabled(false))
         a.getPresentation.setIcon(ToggleAction.disabled)
-        disableRPC()
       case PresenceEnabled(false) =>
         pe.loadState(new PresenceEnabled())
         a.getPresentation.setIcon(ToggleAction.enabled)

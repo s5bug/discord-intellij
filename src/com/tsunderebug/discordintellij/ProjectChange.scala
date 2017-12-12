@@ -9,15 +9,22 @@ import com.tsunderebug.drpc.RichPresence
 class ProjectChange extends StartupActivity {
 
   override def runActivity(project: Project): Unit = {
-    val code = ApplicationInfo.getInstance().getBuild.asString().take(2).toLowerCase
-    val hook = new FileChange
-    project.getMessageBus.connect().subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, hook)
-    RichPresence(
-      state = s"Opened ${project.getName}",
-      details = s"${ApplicationInfo.getInstance().getApiVersion}",
-      largeImageKey = code,
-      largeImageText = ApplicationInfo.getInstance().getVersionName
-    ).submit()
+    val pe = project.getComponent[PresenceEnabled](classOf[PresenceEnabled], new PresenceEnabled())
+    pe match {
+      case PresenceEnabled(true) =>
+        openTimes += (project -> System.currentTimeMillis())
+        val code = ApplicationInfo.getInstance().getBuild.asString().take(2).toLowerCase
+        val hook = new FileChange
+        project.getMessageBus.connect().subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, hook)
+        RichPresence(
+          state = s"Opened ${project.getName}",
+          details = s"${ApplicationInfo.getInstance().getApiVersion}",
+          largeImageKey = code,
+          largeImageText = ApplicationInfo.getInstance().getVersionName,
+          startTimestamp = openTimes(project) / 1000
+        ).submit()
+      case _ =>
+    }
   }
 
 }

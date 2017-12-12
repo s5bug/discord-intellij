@@ -6,6 +6,6 @@ class StartupShutdown extends ApplicationComponent {
 
   override def initComponent(): Unit = enableRPC()
 
-  override def disposeComponent(): Unit = disableRPC()
+  override def disposeComponent(): Unit = stopRPC()
 
 }

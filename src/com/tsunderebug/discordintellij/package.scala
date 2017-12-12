@@ -4,7 +4,11 @@ import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.project.Project
 import com.tsunderebug.drpc.RichPresence
 
+import scala.collection.mutable
+
 package object discordintellij {
+
+  val openTimes: mutable.Map[Project, Long] = mutable.Map()
 
   def enableRPC(): Unit = {
     RichPresence.start("384215522050572288")
@@ -22,7 +26,11 @@ package object discordintellij {
     new ProjectChange().runActivity(p)
   }
 
-  def disableRPC(): Unit = {
+  def hideRPC(): Unit = {
+    RichPresence().submit()
+  }
+
+  def stopRPC(): Unit = {
     RichPresence.stop()
   }
 
