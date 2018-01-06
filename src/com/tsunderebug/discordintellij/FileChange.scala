@@ -13,7 +13,7 @@ class FileChange extends FileEditorManagerListener {
         Option(event.getNewFile) match {
           case Some(file) =>
             val name = file.getFileType.getName
-            val lowercaseName = name.split("""\s""").head.toLowerCase
+            val lowercaseName = name.split("""\s""").head.toLowerCase.replaceAll("#", "sharp")
             val ide = ApplicationInfo.getInstance.getBuild.asString.take(2).toLowerCase
             RichPresence(
               state = s"Working on ${event.getManager.getProject.getName}",
