@@ -1,48 +1,50 @@
 <idea-plugin>
-  <id>com.tsunderebug.discordintellij</id>
-  <name>IntelliJ Discord Integration</name>
-  <version>1.5.1</version>
-  <vendor email="tsunderebug@tsunderebug.com" url="https://www.github.com/TsundereBug">Anthony Cerruti</vendor>
+    <id>com.tsunderebug.discordintellij</id>
+    <name>IntelliJ Discord Integration</name>
+    <version>2.0</version>
+    <vendor email="tsunderebug@tsunderebug.com" url="https://www.github.com/TsundereBug">Anthony Cerruti</vendor>
 
-  <description><![CDATA[
-      Adds rich presence integration to IntelliJ.
-      Doesn't support your language? Request it via <a href="https://goo.gl/forms/8DDDUZ8QcOvZQLXm1">this form</a>.
+    <description><![CDATA[
+        Adds rich presence integration to IntelliJ.
+        Doesn't support your language? Request it via <a href="https://goo.gl/forms/8DDDUZ8QcOvZQLXm1">this form</a>.
 
-      Features:
-      <ul>
-        <li>What file you're editing, what language you're using, and what IDE you prefer will now be shown in Discord!</li>
-        <li>You can see how long since you started working on a project!</li>
-        <li>"What if my project is a surprise or I'm under an NDA?" You can disable the Rich Presence from showing per-project!</li>
-        <li>Amazing flat icons mainly created by <a href="http://github.com/HelloWorld017/">HelloWorld017</a>.</li>
-      </ul>
+        Features:
+        <ul>
+            <li>What file you're editing, what language you're using, and what IDE you prefer will now be shown in Discord!</li>
+            <li>You can see how long since you started working on a project!</li>
+            <li>"What if my project is a surprise or I'm under an NDA?" You can disable the Rich Presence from showing per-project!</li>
+            <li>Amazing flat icons mainly created by <a href="http://github.com/HelloWorld017/">HelloWorld017</a>.</li>
+        </ul>
     ]]></description>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="172.0"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="172.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products -->
-  <depends>com.intellij.modules.lang</depends>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products -->
+    <depends>com.intellij.modules.lang</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <postStartupActivity implementation="com.tsunderebug.discordintellij.ProjectChange" />
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.tsunderebug.discordintellij.ProjectChange"/>
+    </extensions>
 
-  <actions>
-    <group id="DiscordIntellij.ActionsMenu" text="_Discord" description="Discord actions">
-      <add-to-group group-id="MainToolBar" anchor="last" />
-      <action class="com.tsunderebug.discordintellij.ToggleAction" id="discord.Toggle" text="_Toggle" description="Toggle RPC for this project" icon="/icons/enabled.png" />
-    </group>
-  </actions>
+    <actions>
+        <group id="DiscordIntellij.ActionsMenu" text="_Discord" description="Discord actions">
+            <add-to-group group-id="MainToolBar" anchor="last"/>
+            <add-to-group group-id="ViewMenu" anchor="last"/>
+            <action class="com.tsunderebug.discordintellij.ToggleAction" id="discord.Toggle" text="_Toggle"
+                    description="Toggle RPC for this project" icon="/icons/enabled.png"/>
+        </group>
+    </actions>
 
-  <application-components>
-    <component>
-      <implementation-class>com.tsunderebug.discordintellij.StartupShutdown</implementation-class>
-    </component>
-    <component>
-      <implementation-class>com.tsunderebug.discordintellij.PresenceEnabled</implementation-class>
-    </component>
-  </application-components>
+    <application-components>
+        <component>
+            <implementation-class>com.tsunderebug.discordintellij.StartupShutdown</implementation-class>
+        </component>
+        <component>
+            <implementation-class>com.tsunderebug.discordintellij.PresenceEnabled</implementation-class>
+        </component>
+    </application-components>
 
 </idea-plugin>
