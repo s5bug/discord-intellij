@@ -15,8 +15,8 @@ public class FileChange implements FileEditorManagerListener {
 		if(pe.isEnabled()) {
 			if(e.getNewFile() != null) {
 				VirtualFile file = e.getNewFile();
-				String name = file.getFileType().getDescription();
-				String lowercaseName = name.split("\\s")[0].toLowerCase().replaceAll("#", "sharp");
+				String name = file.getFileType().getDescription().split("\\s|/")[0];
+				String lowercaseName = name.toLowerCase().replaceAll("#", "sharp").replaceAll("\\+", "p");
 				String ide = ApplicationInfo.getInstance().getBuild().asString().substring(0, 2).toLowerCase();
 				DiscordRichPresence drp = new DiscordRichPresence();
 				drp.state = String.format("Working on %s", e.getManager().getProject().getName());
