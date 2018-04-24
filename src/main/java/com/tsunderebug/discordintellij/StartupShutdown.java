@@ -6,12 +6,13 @@ public class StartupShutdown implements ApplicationComponent {
 
 	@Override
 	public void initComponent() {
-		DiscordIntelliJ.enableRPC();
+		AgentManager.getAgents().forEach(PresenceAgent::init);
+        AgentManager.getAgents().forEach((agent) -> agent.enable(Presence.getInstance()));
 	}
 
 	@Override
 	public void disposeComponent() {
-		DiscordIntelliJ.stopRPC();
+        AgentManager.getAgents().forEach(PresenceAgent::stop);
 	}
 
 }

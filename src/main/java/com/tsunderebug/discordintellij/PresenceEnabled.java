@@ -6,7 +6,7 @@ import com.intellij.openapi.components.Storage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@State(name = "discordPresenceEnabled", storages = {@Storage(value = "workspace.xml")})
+@State(name = "presenceEnabled", storages = {@Storage(value = "workspace.xml")})
 public class PresenceEnabled implements PersistentStateComponent<PresenceEnabled> {
 
 	private boolean enabled;

@@ -25,15 +25,15 @@
     <!-- uncomment to enable plugin in all products -->
     <depends>com.intellij.modules.lang</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <postStartupActivity implementation="com.tsunderebug.discordintellij.ProjectChange"/>
-    </extensions>
+    <!--<extensions defaultExtensionNs="com.intellij">-->
+        <!--<postStartupActivity implementation="com.tsunderebug.discordintellij.ProjectChange"/>-->
+    <!--</extensions>-->
 
     <actions>
         <group id="DiscordIntellij.ActionsMenu" text="_Discord" description="Discord actions">
             <add-to-group group-id="MainToolBar" anchor="last"/>
             <add-to-group group-id="ViewMenu" anchor="last"/>
-            <action class="com.tsunderebug.discordintellij.ToggleAction" id="discord.Toggle" text="_Toggle"
+            <action class="com.tsunderebug.discordintellij.TogglePresence" id="discord.Toggle" text="_Toggle"
                     description="Toggle RPC for this project" icon="/icons/enabled.png"/>
         </group>
     </actions>
@@ -47,4 +47,9 @@
         </component>
     </application-components>
 
+    <project-components>
+        <component>
+            <implementation-class>com.tsunderebug.discordintellij.ProjectStartStop</implementation-class>
+        </component>
+    </project-components>
 </idea-plugin>
