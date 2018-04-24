@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.tsunderebug.discordintellij</id>
     <name>Discord Integration</name>
-    <version>2.3</version>
+    <version>3.0.0</version>
     <vendor email="tsunderebug@tsunderebug.com" url="https://www.github.com/TsundereBug">Anthony Cerruti</vendor>
 
     <description><![CDATA[
