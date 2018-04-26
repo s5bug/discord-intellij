@@ -10,10 +10,11 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 dependencies {
-    compile 'com.github.vatuu:discord-rpc:1.4.3'
+    compile 'com.github.MinnDevelopment:java-discord-rpc:v1.3.6'
 }
 
 repositories {
+    jcenter()
     maven { url 'https://jitpack.io' }
 }
 
