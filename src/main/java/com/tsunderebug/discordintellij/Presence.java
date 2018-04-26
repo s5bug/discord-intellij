@@ -13,6 +13,7 @@ public class Presence {
     private static final Presence instance = new Presence();
     private static Map<Project, Long> projects = new HashMap<>();
 
+    private final String application;
     private String state;
     private String details;
     private String largeImageKey;
@@ -23,6 +24,7 @@ public class Presence {
     private long startTimeStamp;
 
     private Presence() {
+        application = ApplicationInfo.getInstance().getVersionName();
         state = String.format("In %s %s", ApplicationInfo.getInstance().getVersionName(), ApplicationInfo.getInstance().getFullVersion());
         details = ApplicationInfo.getInstance().getApiVersion();
         largeImageKey = ApplicationInfo.getInstance().getBuild().asString().substring(0, 2).toLowerCase();
@@ -31,6 +33,10 @@ public class Presence {
 
     public static Presence getInstance(){
         return instance;
+    }
+
+    public String getApplication() {
+        return application;
     }
 
     public String getState() {

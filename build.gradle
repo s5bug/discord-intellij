@@ -1,3 +1,4 @@
+
 plugins {
     id "org.jetbrains.intellij" version "0.3.1"
 }
@@ -11,6 +12,10 @@ sourceCompatibility = 1.8
 
 dependencies {
     compile 'com.github.MinnDevelopment:java-discord-rpc:v1.3.6'
+    compile "com.google.api-client:google-api-client:1.23.0"
+    compile "com.google.oauth-client:google-oauth-client:1.23.0"
+    compile "com.google.oauth-client:google-oauth-client-java6:1.23.0"
+    compile "com.google.oauth-client:google-oauth-client-jetty:1.23.0"
 }
 
 repositories {
@@ -26,4 +31,24 @@ patchPluginXml {
     changeNotes """
       v3.0.0 - Converted build to Gradle
       """
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['build/src/main/java']
+        }
+    }
+}
+
+task prepareSources(type: Copy) {
+    from('src/main/java')
+    into('build/src/main/java')
+    filter(ReplaceTokens, tokens: [slack_client_id: slackClientId, slack_client_secret: slackClientSecret])
+}
+
+compileJava {
+    dependsOn prepareSources
 }

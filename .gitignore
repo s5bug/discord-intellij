@@ -199,3 +199,8 @@ gradle-app.setting
 
 
 # End of https://www.gitignore.io/api/java,maven,gradle,jetbrains,jetbrains+all,jetbrains+iml
+
+# # # #
+# This line is added to prevent the slack client id and secret from being revealed in git
+/gradle.properties
+#
