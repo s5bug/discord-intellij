@@ -6,6 +6,7 @@ import com.intellij.openapi.util.IconLoader;
 
 import javax.swing.Icon;
 
+
 public class ToggleAction extends AnAction {
 
 	public static final Icon ENABLED = IconLoader.findIcon("/icons/enabled.png");

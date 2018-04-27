@@ -1,11 +1,11 @@
 package com.tsunderebug.discordintellij;
 
+import club.minnced.discord.rpc.DiscordRPC;
+import club.minnced.discord.rpc.DiscordRichPresence;
 import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
 import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.vfs.VirtualFile;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 
 public class FileChange implements FileEditorManagerListener {
 
@@ -26,7 +26,7 @@ public class FileChange implements FileEditorManagerListener {
 				drp.smallImageText = String.format("Using %s", ApplicationInfo.getInstance().getVersionName());
 				drp.details = String.format("Editing [%s] %s", name, file.getName());
 				drp.startTimestamp = DiscordIntelliJ.openTimes.get(e.getManager().getProject()) / 1000;
-				DiscordRPC.discordUpdatePresence(drp);
+                DiscordRPC.INSTANCE.Discord_UpdatePresence(drp);
 			} else {
 				new ProjectChange().runActivity(e.getManager().getProject());
 			}
