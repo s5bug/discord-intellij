@@ -36,6 +36,7 @@ public class PresenceStatusWidget extends EditorBasedWidget
         super(project);
         myPresenceStatus = presence.getPresenceStatus();
         myText = myPresenceStatus.getStatus();
+        subscribeToPresenceChangeEvents(project);
     }
 
 
@@ -45,7 +46,13 @@ public class PresenceStatusWidget extends EditorBasedWidget
     }
 
     protected void subscribeToPresenceChangeEvents(@NotNull Project project) {
-
+        ApplicationManager.getApplication().getMessageBus().connect().subscribe(PresenceStatus.PRESENCE_STATUS_CHANGE, new PresenceStatusChangeListener() {
+            @Override
+            public void statusChanged(@NotNull String status) {
+                LOG.debug("repository mappings changed");
+                updateLater();
+            }
+        });
     }
 
     public void activate() {

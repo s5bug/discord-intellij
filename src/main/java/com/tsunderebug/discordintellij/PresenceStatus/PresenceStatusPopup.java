@@ -39,30 +39,8 @@ public class PresenceStatusPopup {
     @NotNull
     private ActionGroup createActions() {
         DefaultActionGroup popupGroup = new DefaultActionGroup(null, false);
-        popupGroup.add(new PresenceStatusSelection("Available", myPresenceStatus) {
-            @Override
-            public void actionPerformed(AnActionEvent e) {
-                myPresenceStatus.setStatus("Available");
-            }
-        });
-        popupGroup.add(new PresenceStatusSelection("Idle", myPresenceStatus) {
-            @Override
-            public void actionPerformed(AnActionEvent e) {
-                myPresenceStatus.setStatus("Idle");
-            }
-        });
-        popupGroup.add(new PresenceStatusSelection("Busy", myPresenceStatus) {
-            @Override
-            public void actionPerformed(AnActionEvent e) {
-                myPresenceStatus.setStatus("Busy");
-            }
-        });
-        popupGroup.add(new PresenceStatusSelection("Away", myPresenceStatus) {
-            @Override
-            public void actionPerformed(AnActionEvent e) {
-                myPresenceStatus.setStatus("Away");
-            }
-        });
+        popupGroup.add(new PresenceStatusSelection("Active", myPresenceStatus));
+        popupGroup.add(new PresenceStatusSelection("Away", myPresenceStatus));
         return popupGroup;
     }
 }

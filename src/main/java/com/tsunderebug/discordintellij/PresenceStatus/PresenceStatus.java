@@ -8,7 +8,7 @@ import static com.tsunderebug.discordintellij.PresenceStatus.PresenceStatus.PRES
 
 public class PresenceStatus {
     public static final Topic<PresenceStatusChangeListener> PRESENCE_STATUS_CHANGE = Topic.create("Presence Status change", PresenceStatusChangeListener.class);;
-    private static final String DEFAULT_PRESENCE_STATUS = "Available";
+    private static final String DEFAULT_PRESENCE_STATUS = "Active";
 
     private String status;
 
