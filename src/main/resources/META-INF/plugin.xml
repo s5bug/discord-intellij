@@ -25,9 +25,16 @@
     <!-- uncomment to enable plugin in all products -->
     <depends>com.intellij.modules.lang</depends>
 
-    <!--<extensions defaultExtensionNs="com.intellij">-->
-        <!--<postStartupActivity implementation="com.tsunderebug.discordintellij.ProjectChange"/>-->
-    <!--</extensions>-->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable groupId="appearance" displayName="Presence" id="preferences.PresenceConfigurable"
+                                 instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
+        <applicationConfigurable groupId="appearance" displayName="Discord" id="preferences.DiscordConfigurable"
+                                 parentId="preferences.PresenceConfigurable"
+                                 instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
+        <applicationConfigurable groupId="appearance" displayName="Slack" id="preferences.SlackConfigurable"
+                                 parentId="preferences.PresenceConfigurable"
+                                 instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
+    </extensions>
 
     <actions>
         <group id="DiscordIntellij.ActionsMenu" text="_Discord" description="Discord actions">
