@@ -5,12 +5,18 @@ import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.wm.StatusBar;
+import com.intellij.openapi.wm.WindowManager;
+import com.tsunderebug.discordintellij.PresenceStatus.PresenceStatusWidget;
 import org.jetbrains.annotations.NotNull;
 
 public class ProjectStartStop implements ProjectComponent {
     private final static Logger LOG = Logger.getInstance(ProjectStartStop.class);
 
     private final Project project;
+    private StatusBar statusBar;
+
+
     @NotNull
     private final StartupShutdown applicationComponent;
 
@@ -42,6 +48,11 @@ public class ProjectStartStop implements ProjectComponent {
         if(presenceEnabled.isEnabled()) {
             AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
         }
+
+        if (this.statusBar == null) {
+            this.statusBar = WindowManager.getInstance().getStatusBar(project);
+        }
+        statusBar.addWidget(new PresenceStatusWidget(project, presence));
     }
 
     public void projectClosed() {

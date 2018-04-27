@@ -2,10 +2,10 @@ package com.tsunderebug.discordintellij;
 
 import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.project.Project;
+import com.tsunderebug.discordintellij.PresenceStatus.PresenceStatus;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class Presence {
@@ -14,6 +14,7 @@ public class Presence {
     private static Map<Project, Long> projects = new HashMap<>();
 
     private final String application;
+    private PresenceStatus presenceStatus;
     private String state;
     private String details;
     private String largeImageKey;
@@ -29,6 +30,15 @@ public class Presence {
         details = ApplicationInfo.getInstance().getApiVersion();
         largeImageKey = ApplicationInfo.getInstance().getBuild().asString().substring(0, 2).toLowerCase();
         largeImageText = ApplicationInfo.getInstance().getVersionName();
+        presenceStatus = new PresenceStatus();
+    }
+
+    public PresenceStatus getPresenceStatus() {
+        return presenceStatus;
+    }
+
+    public void setPresenceStatus(PresenceStatus presenceStatus) {
+        this.presenceStatus = presenceStatus;
     }
 
     public static Presence getInstance(){

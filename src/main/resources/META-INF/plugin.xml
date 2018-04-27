@@ -36,6 +36,9 @@
             <action class="com.tsunderebug.discordintellij.TogglePresence" id="discord.Toggle" text="_Toggle"
                     description="Toggle RPC for this project" icon="/icons/enabled.png"/>
         </group>
+        <action id="Presence.PresenceStatusSelections"
+                class="com.tsunderebug.discordintellij.PresenceStatus.PresenceStatusSelection" text="Presence Status"
+                description="Update status using presence plugin."/>
     </actions>
 
     <application-components>
