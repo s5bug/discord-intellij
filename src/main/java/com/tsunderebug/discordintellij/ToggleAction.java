@@ -4,7 +4,8 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.util.IconLoader;
 
-import javax.swing.*;
+import javax.swing.Icon;
+
 
 public class ToggleAction extends AnAction {
 
