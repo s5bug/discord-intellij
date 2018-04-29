@@ -8,25 +8,25 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.JComponent;
 
 
-public class PresenceConfigurable implements Configurable {
-    private PresenceConfigurableGUI presenceGUI;
+public class PresenceConfigurableDiscord implements Configurable {
+    private DiscordConfigurableGUI presenceGUI;
 
     @Nls
     @Override
     public String getDisplayName() {
-        return "Presence";
+        return "Discord";
     }
 
     @Nullable
     @Override
     public String getHelpTopic() {
-        return "preference.PresenceConfigurable";
+        return "preference.PresenceConfigurableDiscord";
     }
 
     @Nullable
     @Override
     public JComponent createComponent() {
-        presenceGUI = new PresenceConfigurableGUI();
+        presenceGUI = new DiscordConfigurableGUI();
         return presenceGUI.getTopLevel();
     }
 

@@ -30,10 +30,10 @@
                                  instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
         <applicationConfigurable groupId="appearance" displayName="Discord" id="preferences.DiscordConfigurable"
                                  parentId="preferences.PresenceConfigurable"
-                                 instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
+                                 instance="com.tsunderebug.discordintellij.PresenceConfigurableDiscord"/>
         <applicationConfigurable groupId="appearance" displayName="Slack" id="preferences.SlackConfigurable"
                                  parentId="preferences.PresenceConfigurable"
-                                 instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
+                                 instance="com.tsunderebug.discordintellij.PresenceConfigurableSlack"/>
     </extensions>
 
     <actions>
