@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij;
+package com.tsunderebug.discordintellij.Slack;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +7,10 @@ import java.awt.event.ActionListener;
 public class SlackConfigurableGUI {
     private JPanel slackPresence;
     private JCheckBox slackPresenceEnabled;
+    private JRadioButton defaultRadioButton;
+    private JRadioButton customRadioButton;
+    private JTextField textField1;
+    private JTextField textField2;
     private JButton addToSlackButton;
 
     public SlackConfigurableGUI() {

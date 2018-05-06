@@ -1,32 +1,32 @@
-package com.tsunderebug.discordintellij;
+package com.tsunderebug.discordintellij.Discord;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 
-public class PresenceConfigurableSlack implements Configurable {
-    private SlackConfigurableGUI presenceGUI;
+public class DiscordPresenceConfigurable implements Configurable {
+    private DiscordConfigurableGUI presenceGUI;
 
     @Nls
     @Override
     public String getDisplayName() {
-        return "Slack";
+        return "Presence for IntelliJ";
     }
 
     @Nullable
     @Override
     public String getHelpTopic() {
-        return "preference.PresenceConfigurableSlack";
+        return "preference.PresenceConfigurable";
     }
 
     @Nullable
     @Override
     public JComponent createComponent() {
-        presenceGUI = new SlackConfigurableGUI();
+        presenceGUI = new DiscordConfigurableGUI();
         return presenceGUI.getTopLevel();
     }
 

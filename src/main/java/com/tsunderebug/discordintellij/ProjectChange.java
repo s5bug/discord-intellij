@@ -20,10 +20,7 @@ public class ProjectChange implements StartupActivity {
         presence.setLargeImageKey(code);
         presence.setLargeImageText(ApplicationInfo.getInstance().getVersionName());
 
-		PresenceEnabled presenceEnabled = project.getComponent(PresenceEnabled.class, new PresenceEnabled());
-		if(presenceEnabled.isEnabled()) {
-			AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
-		}
+		AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
 	}
 
 }

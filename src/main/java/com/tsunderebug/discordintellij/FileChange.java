@@ -13,7 +13,6 @@ public class FileChange implements FileEditorManagerListener {
 		Project project = e.getManager().getProject();
         Presence presence = Presence.getInstance();
 
-		PresenceEnabled presenceEnabled = project.getComponent(PresenceEnabled.class, new PresenceEnabled());
         if(e.getNewFile() != null) {
             VirtualFile file = e.getNewFile();
             String name = file.getFileType().getDescription().split("\\s|\\.|/")[0];
@@ -31,9 +30,7 @@ public class FileChange implements FileEditorManagerListener {
             new ProjectChange().runActivity(project);
         }
 
-		if(presenceEnabled.isEnabled()) {
-            AgentManager.getAgents().forEach((agent) -> agent.enable(Presence.getInstance()));
-		}
+        AgentManager.getAgents().forEach((agent) -> agent.enable(Presence.getInstance()));
 	}
 
 }

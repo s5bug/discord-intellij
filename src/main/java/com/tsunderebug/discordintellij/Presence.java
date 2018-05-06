@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class Presence {

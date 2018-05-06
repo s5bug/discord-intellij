@@ -2,9 +2,9 @@ package com.tsunderebug.discordintellij;
 
 import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.components.ProjectComponent;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class ProjectStartStop implements ProjectComponent {
@@ -38,10 +38,7 @@ public class ProjectStartStop implements ProjectComponent {
         presence.setLargeImageKey(code);
         presence.setLargeImageText(ApplicationInfo.getInstance().getVersionName());
 
-        PresenceEnabled presenceEnabled = project.getComponent(PresenceEnabled.class, new PresenceEnabled());
-        if(presenceEnabled.isEnabled()) {
-            AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
-        }
+        AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
     }
 
     public void projectClosed() {
@@ -49,8 +46,7 @@ public class ProjectStartStop implements ProjectComponent {
         Presence presence = Presence.getInstance();
         presence.removeProject(project);
 
-        PresenceEnabled presenceEnabled = project.getComponent(PresenceEnabled.class, new PresenceEnabled());
-        if(presenceEnabled.isEnabled() && project.equals(presence.getCurrentProject())) {
+        if (project.equals(presence.getCurrentProject())) {
             AgentManager.getAgents().forEach(PresenceAgent::hide);
         }
     }

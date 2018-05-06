@@ -3,10 +3,9 @@ package com.tsunderebug.discordintellij;
 import javax.swing.*;
 
 public class PresenceConfigurableGUI {
-    private JPanel presenceSettings;
-    private JTextPane pluginSettings;
+    private JComponent topLevel;
 
     public JComponent getTopLevel() {
-        return presenceSettings;
+        return topLevel;
     }
 }

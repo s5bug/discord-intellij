@@ -30,18 +30,26 @@
                                  instance="com.tsunderebug.discordintellij.PresenceConfigurable"/>
         <applicationConfigurable groupId="appearance" displayName="Discord" id="preferences.DiscordConfigurable"
                                  parentId="preferences.PresenceConfigurable"
-                                 instance="com.tsunderebug.discordintellij.PresenceConfigurableDiscord"/>
+                                 instance="com.tsunderebug.discordintellij.Discord.DiscordPresenceConfigurable"/>
         <applicationConfigurable groupId="appearance" displayName="Slack" id="preferences.SlackConfigurable"
                                  parentId="preferences.PresenceConfigurable"
-                                 instance="com.tsunderebug.discordintellij.PresenceConfigurableSlack"/>
+                                 instance="com.tsunderebug.discordintellij.Slack.SlackPresenceConfigurable"/>
     </extensions>
 
     <actions>
-        <group id="DiscordIntellij.ActionsMenu" text="_Discord" description="Discord actions">
-            <add-to-group group-id="MainToolBar" anchor="last"/>
+        <group id="DiscordIntellij.ActionsMenu.Discord" text="_Discord" description="Discord actions">
+            <add-to-group group-id="MainToolBar" relative-to-action="HelpTopics" anchor="before"/>
             <add-to-group group-id="ViewMenu" anchor="last"/>
-            <action class="com.tsunderebug.discordintellij.TogglePresence" id="discord.Toggle" text="_Toggle"
-                    description="Toggle RPC for this project" icon="/icons/enabled.png"/>
+            <action class="com.tsunderebug.discordintellij.Discord.DiscordTogglePresence" id="discord.Toggle"
+                    text="_Disable Discord"
+                    description="Toggle Discord presence for this project" icon="/icons/discord.png"/>
+        </group>
+        <group id="DiscordIntellij.ActionsMenu.Slack" text="_Slack" description="Slack actions">
+            <add-to-group group-id="MainToolBar" relative-to-action="HelpTopics" anchor="before"/>
+            <add-to-group group-id="ViewMenu" anchor="last"/>
+            <action class="com.tsunderebug.discordintellij.Slack.SlackTogglePresence" id="slack.Toggle"
+                    text="_Disable Slack"
+                    description="Toggle Slack presence for this project" icon="/icons/slack.png"/>
         </group>
     </actions>
 
@@ -50,7 +58,10 @@
             <implementation-class>com.tsunderebug.discordintellij.StartupShutdown</implementation-class>
         </component>
         <component>
-            <implementation-class>com.tsunderebug.discordintellij.PresenceEnabled</implementation-class>
+            <implementation-class>com.tsunderebug.discordintellij.Discord.DiscordAgent</implementation-class>
+        </component>
+        <component>
+            <implementation-class>com.tsunderebug.discordintellij.Slack.SlackAgent</implementation-class>
         </component>
     </application-components>
 

@@ -1,34 +1,43 @@
 package com.tsunderebug.discordintellij;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.ToggleAction;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.IconLoader;
 
-import javax.swing.*;
+public class TogglePresence extends ToggleAction {
+    private final static Logger LOG = Logger.getInstance(ProjectStartStop.class);
+    private static final String DISABLE_TEXT = "Disable";
+    private static final String ENABLE_TEXT = "Enable";
 
-public class TogglePresence extends AnAction {
 
-	private static final Icon ENABLED = IconLoader.findIcon("/icons/enabled.png");
-	private static final Icon DISABLED = IconLoader.findIcon("/icons/disabled.png");
+    @Override
+    public boolean isSelected(AnActionEvent actionEvent) {
+        Project project = actionEvent.getProject();
+        if (project == null) {
+            return false;
+        }
 
-	@Override
-	public void actionPerformed(AnActionEvent actionEvent) {
-		Project project = actionEvent.getProject();
-		if (project == null) {
-			return;
-		}
+        PresenceAgent agent = getAgent(project);
+        return agent.isActive();
+    }
 
-		PresenceEnabled presenceEnabled = project.getComponent(PresenceEnabled.class, new PresenceEnabled());
-		if(presenceEnabled.isEnabled()) {
-			presenceEnabled.loadState(new PresenceEnabled(false));
-			actionEvent.getPresentation().setIcon(TogglePresence.DISABLED);
-			AgentManager.getAgents().forEach(PresenceAgent::hide);
-		} else {
-			presenceEnabled.loadState(new PresenceEnabled(true));
-			actionEvent.getPresentation().setIcon(TogglePresence.ENABLED);
-			AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
-		}
-	}
+    @Override
+    public void setSelected(AnActionEvent actionEvent, boolean state) {
+        Project project = actionEvent.getProject();
+        if (project == null) {
+            return;
+        }
 
+        PresenceAgent agent = getAgent(project);
+        agent.setActive(state);
+        actionEvent.getPresentation().setText(String.format("%s %s", agent.isActive() ? DISABLE_TEXT : ENABLE_TEXT, agent.getName()));
+        agent.update(Presence.getInstance());
+
+    }
+
+    public PresenceAgent getAgent(Project project) {
+        LOG.error("It is invalid to call TogglePresence directly, you must implement a subclass.");
+        throw new UnsupportedOperationException();
+    }
 }

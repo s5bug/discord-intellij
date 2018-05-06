@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij;
+package com.tsunderebug.discordintellij.Discord;
 
 import javax.swing.*;
 

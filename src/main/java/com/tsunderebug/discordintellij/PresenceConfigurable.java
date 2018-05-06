@@ -5,11 +5,11 @@ import com.intellij.openapi.options.ConfigurationException;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 
 public class PresenceConfigurable implements Configurable {
-    private PresenceConfigurableGUI presenceGUI;
+    private PresenceConfigurableGUI gui;
 
     @Nls
     @Override
@@ -26,8 +26,8 @@ public class PresenceConfigurable implements Configurable {
     @Nullable
     @Override
     public JComponent createComponent() {
-        presenceGUI = new PresenceConfigurableGUI();
-        return presenceGUI.getTopLevel();
+        gui = new PresenceConfigurableGUI();
+        return gui.getTopLevel();
     }
 
     @Override
