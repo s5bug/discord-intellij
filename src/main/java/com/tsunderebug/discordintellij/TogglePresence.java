@@ -5,11 +5,12 @@ import com.intellij.openapi.actionSystem.ToggleAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 
-public class TogglePresence extends ToggleAction {
+public abstract class TogglePresence extends ToggleAction {
     private final static Logger LOG = Logger.getInstance(ProjectStartStop.class);
     private static final String DISABLE_TEXT = "Disable";
     private static final String ENABLE_TEXT = "Enable";
 
+    public abstract PresenceAgent getAgent(Project project);
 
     @Override
     public boolean isSelected(AnActionEvent actionEvent) {
@@ -36,8 +37,4 @@ public class TogglePresence extends ToggleAction {
 
     }
 
-    public PresenceAgent getAgent(Project project) {
-        LOG.error("It is invalid to call TogglePresence directly, you must implement a subclass.");
-        throw new UnsupportedOperationException();
-    }
 }

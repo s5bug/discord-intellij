@@ -108,4 +108,8 @@ public class Presence {
     public Project getCurrentProject() {
         return currentProject;
     }
+
+    public String getApplication() {
+        return ApplicationInfo.getInstance().getVersionName();
+    }
 }

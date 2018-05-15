@@ -30,7 +30,7 @@ public class FileChange implements FileEditorManagerListener {
             new ProjectChange().runActivity(project);
         }
 
-        AgentManager.getAgents().forEach((agent) -> agent.enable(Presence.getInstance()));
+        AgentManager.getAgents().forEach((agent) -> agent.show(Presence.getInstance()));
 	}
 
 }

@@ -38,7 +38,7 @@ public class ProjectStartStop implements ProjectComponent {
         presence.setLargeImageKey(code);
         presence.setLargeImageText(ApplicationInfo.getInstance().getVersionName());
 
-        AgentManager.getAgents().forEach(x -> x.enable(Presence.getInstance()));
+        AgentManager.getAgents().forEach(x -> x.show(Presence.getInstance()));
     }
 
     public void projectClosed() {
