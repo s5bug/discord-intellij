@@ -8,6 +8,8 @@ import com.intellij.ide.util.PropertiesComponent;
 import com.tsunderebug.discordintellij.Presence;
 import com.tsunderebug.discordintellij.PresenceAgent;
 
+import static com.tsunderebug.discordintellij.Discord.DiscordAPIKeys.DISCORD_CLIENT_ID;
+
 public class DiscordAgent extends PresenceAgent {
     public static final String DISCORD_PRESENCE_ENABLED = "presence.discord.enabled";
 
@@ -26,7 +28,7 @@ public class DiscordAgent extends PresenceAgent {
 
     @Override
     public void initializeAgent() {
-        DiscordRPC.INSTANCE.Discord_Initialize("384215522050572288", new DiscordEventHandlers(), true, "");
+        DiscordRPC.INSTANCE.Discord_Initialize(DISCORD_CLIENT_ID, new DiscordEventHandlers(), true, "");
     }
 
     @Override
