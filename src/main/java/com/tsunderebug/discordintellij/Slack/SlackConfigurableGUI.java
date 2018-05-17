@@ -52,8 +52,8 @@ public class SlackConfigurableGUI {
         });
 
         removeTeamButton.addActionListener(e -> {
-            SlackAgent.setEnabled(teams.size() > 1);
             Optional<? extends PresenceAgent> agent = AgentManager.getAgent(SlackAgent.class);
+            SlackAgent.setEnabled(teams.size() > 1);
             agent.ifPresent(presenceAgent -> ((SlackAgent) presenceAgent).removeTeam(teamList.getSelectedValue()));
             teams.removeElementAt(teamList.getSelectedIndex());
         });
