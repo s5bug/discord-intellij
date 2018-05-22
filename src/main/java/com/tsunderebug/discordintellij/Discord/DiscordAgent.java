@@ -17,6 +17,10 @@ public class DiscordAgent extends PresenceAgent {
         PresenceAgent.addAgent(DiscordAgent.class);
     }
 
+    public DiscordAgent() {
+        super(new DiscordTogglePresence());
+    }
+
     @SuppressWarnings("unused")
     public static boolean isEnabled() {
         return PropertiesComponent.getInstance().getBoolean(DISCORD_PRESENCE_ENABLED, true);

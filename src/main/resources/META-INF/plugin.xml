@@ -34,6 +34,10 @@
         <applicationConfigurable groupId="appearance" displayName="Slack" id="preferences.SlackConfigurable"
                                  parentId="preferences.PresenceConfigurable"
                                  instance="com.tsunderebug.discordintellij.Slack.SlackPresenceConfigurable"/>
+        <projectService serviceInterface="com.tsunderebug.discordintellij.Discord.DiscordActive"
+                        serviceImplementation="com.tsunderebug.discordintellij.Discord.DiscordActive"/>
+        <projectService serviceInterface="com.tsunderebug.discordintellij.Slack.SlackActive"
+                        serviceImplementation="com.tsunderebug.discordintellij.Slack.SlackActive"/>
     </extensions>
 
     <actions>
@@ -70,4 +74,5 @@
             <implementation-class>com.tsunderebug.discordintellij.ProjectStartStop</implementation-class>
         </component>
     </project-components>
+
 </idea-plugin>

@@ -38,7 +38,10 @@ public class ProjectStartStop implements ProjectComponent {
         presence.setLargeImageKey(code);
         presence.setLargeImageText(ApplicationInfo.getInstance().getVersionName());
 
-        AgentManager.getAgents().forEach(x -> x.show(Presence.getInstance()));
+        AgentManager.getAgents().forEach(agent -> {
+            agent.setCurrentProject(project);
+            agent.show(Presence.getInstance());
+        });
     }
 
     public void projectClosed() {
@@ -47,7 +50,10 @@ public class ProjectStartStop implements ProjectComponent {
         presence.removeProject(project);
 
         if (project.equals(presence.getCurrentProject())) {
-            AgentManager.getAgents().forEach(PresenceAgent::hide);
+            AgentManager.getAgents().forEach(agent -> {
+                agent.hide();
+                agent.setCurrentProject(null);
+            });
         }
     }
 

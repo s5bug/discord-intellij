@@ -3,17 +3,20 @@ package com.tsunderebug.discordintellij;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
-import com.intellij.openapi.diagnostic.Logger;
-import com.tsunderebug.discordintellij.Slack.SlackAgent;
+import com.intellij.openapi.project.Project;
 
 import java.util.ArrayList;
 
 public abstract class PresenceAgent {
-    private final static Logger LOG = Logger.getInstance(SlackAgent.class);
     private static ArrayList<Class<? extends PresenceAgent>> agentClasses = new ArrayList<>();
 
-    private boolean active = true;
     private boolean initialized = false;
+    private final TogglePresence togglePresence;
+    private Project currentProject = null;
+
+    protected PresenceAgent(TogglePresence togglePresence) {
+        this.togglePresence = togglePresence;
+    }
 
     public static ArrayList<Class<? extends PresenceAgent>> getAgentClasses() {
         return agentClasses;
@@ -42,20 +45,8 @@ public abstract class PresenceAgent {
 
     public abstract void stopAgent();
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void togglePresence() {
-        active = !active;
-    }
-
     public void init() {
-        if (active) {
+        if (isActive()) {
             if (initialized) {
                 Notifications.Bus.notify(
                         new Notification(
@@ -70,29 +61,45 @@ public abstract class PresenceAgent {
         }
     }
 
+    private boolean isActive() {
+        if (getCurrentProject() == null) {
+            return true;
+        }
+        return togglePresence.getActive(getCurrentProject()).isActive();
+    }
+
     public void show(Presence presence) {
-        if (active && initialized) {
+        if (isActive() && initialized) {
             showPresence(presence);
         }
     }
 
     public void hide() {
-        if (active && initialized) {
+        if (isActive() && initialized) {
             hidePresence();
         }
     }
 
     public void stop() {
-        if (active && initialized) {
+        if (isActive() && initialized) {
             initialized = false;
             stopAgent();
         }
     }
-    public void update(Presence presence) {
-        if (active) {
-            showPresence(presence);
+
+    public void update() {
+        if (isActive()) {
+            showPresence(Presence.getInstance());
         } else {
             hidePresence();
         }
+    }
+
+    public Project getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(Project currentProject) {
+        this.currentProject = currentProject;
     }
 }

@@ -31,6 +31,7 @@ public class SlackAgent extends PresenceAgent {
 
     @SuppressWarnings("WeakerAccess")
     public SlackAgent() {
+        super(new SlackTogglePresence());
         SlackOAuth tempOauth = null;
         try {
             tempOauth = new SlackOAuth();
