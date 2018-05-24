@@ -91,8 +91,8 @@ public class SlackAgent extends PresenceAgent {
         try {
             String statusText = String.format("%s %s %s",
                     presence.getApplication(),
-                    presence.getState(),
-                    presence.getDetails());
+                    String.format("In %s %s", presence.getVersionName(), presence.getFullVersion()),
+                    presence.getApiVersion());
             String profile = buildSlackStatus(statusText, ":intellij_idea:");
             postAllStatus(profile);
         } catch (IOException e) {

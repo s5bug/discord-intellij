@@ -12,6 +12,9 @@ import static com.tsunderebug.discordintellij.Discord.DiscordAPIKeys.DISCORD_CLI
 
 public class DiscordAgent extends PresenceAgent {
     public static final String DISCORD_PRESENCE_ENABLED = "presence.discord.enabled";
+    private static final String SMALL_IMAGE_KEY = "tsun";
+    private static final String SMALL_IMAGE_TEXT = "TsundereBug's plugin: https://goo.gl/81tZHT";
+
 
     static {
         PresenceAgent.addAgent(DiscordAgent.class);
@@ -57,12 +60,12 @@ public class DiscordAgent extends PresenceAgent {
 
     private DiscordRichPresence getPresence(Presence presence) {
         DiscordRichPresence drp = new DiscordRichPresence();
-        drp.state = presence.getState();
-        drp.details = presence.getDetails();
-        drp.largeImageKey = presence.getLargeImageKey();
-        drp.largeImageText = presence.getLargeImageText();
-        drp.smallImageKey = presence.getSmallImageKey();
-        drp.smallImageText = presence.getSmallImageText();
+        drp.state = String.format("In %s %s", presence.getVersionName(), presence.getFullVersion());
+        drp.details = presence.getApiVersion();
+        drp.largeImageKey = presence.getBuild().substring(0, 2).toLowerCase();
+        drp.largeImageText = presence.getVersionName();
+        drp.smallImageKey = SMALL_IMAGE_KEY;
+        drp.smallImageText = SMALL_IMAGE_TEXT;
         drp.startTimestamp = presence.getStartTimeStamp();
         return drp;
     }
