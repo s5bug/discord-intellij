@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Slack;
+package com.tsunderebug.discordintellij.slack;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;

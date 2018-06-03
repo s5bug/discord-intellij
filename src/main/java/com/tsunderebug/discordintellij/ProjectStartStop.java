@@ -33,10 +33,6 @@ public class ProjectStartStop implements ProjectComponent {
         String code = ApplicationInfo.getInstance().getBuild().asString().substring(0, 2).toLowerCase();
         FileChange hook = new FileChange();
         project.getMessageBus().connect().subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, hook);
-        presence.setState(String.format("Opened %s", project.getName()));
-        presence.setDetails(String.format("%s", ApplicationInfo.getInstance().getApiVersion()));
-        presence.setLargeImageKey(code);
-        presence.setLargeImageText(ApplicationInfo.getInstance().getVersionName());
 
         AgentManager.getAgents().forEach(agent -> {
             agent.setCurrentProject(project);

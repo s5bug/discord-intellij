@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Slack;
+package com.tsunderebug.discordintellij.slack;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.gson.Gson;
@@ -67,7 +67,7 @@ public class SlackAgent extends PresenceAgent {
         return teamMembers.keySet();
     }
 
-    private static String buildSlackStatus(String statusText, String statusEmoji) throws UnsupportedEncodingException {
+    private static String jsonifySlackStatus(String statusText, String statusEmoji) throws UnsupportedEncodingException {
         Gson gson = new GsonBuilder().create();
         return URLEncoder.encode(gson.toJson(new SlackStatus(statusText, statusEmoji)), "UTF-8");
     }
@@ -89,22 +89,21 @@ public class SlackAgent extends PresenceAgent {
     @Override
     public void showPresence(Presence presence) {
         try {
-            String statusText = String.format("%s %s %s",
-                    presence.getApplication(),
-                    String.format("In %s %s", presence.getVersionName(), presence.getFullVersion()),
-                    presence.getApiVersion());
-            String profile = buildSlackStatus(statusText, ":intellij_idea:");
+
+            String statusText = SlackUtil.tokenizeStatus(presence);
+            String profile = jsonifySlackStatus(statusText, ":intellij_idea:");
             postAllStatus(profile);
         } catch (IOException e) {
             LOG.error("Unable to encode slack presence.", e);
         }
     }
 
+
     @Override
     public void hidePresence() {
         String profile;
         try {
-            profile = buildSlackStatus("", "");
+            profile = jsonifySlackStatus("", "");
             postAllStatus(profile);
         } catch (IOException e) {
             LOG.error("Unable to clear slack presence.", e);
@@ -174,7 +173,7 @@ public class SlackAgent extends PresenceAgent {
         con.setRequestMethod("POST");
         con.setRequestProperty(
                 "User-Agent",
-                "JetBrains Rich Presence Plugin / " + SlackAgent.class.getPackage().getImplementationVersion()
+                "Rich Presence Plugin for JetBrains / " + SlackAgent.class.getPackage().getImplementationVersion()
         );
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 

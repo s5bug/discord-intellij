@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Discord;
+package com.tsunderebug.discordintellij.discord;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;

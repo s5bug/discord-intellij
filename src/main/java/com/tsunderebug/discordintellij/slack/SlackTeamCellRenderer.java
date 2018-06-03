@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Slack;
+package com.tsunderebug.discordintellij.slack;
 
 import javax.swing.*;
 import java.awt.*;

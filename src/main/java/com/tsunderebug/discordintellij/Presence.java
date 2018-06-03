@@ -12,18 +12,31 @@ public class Presence {
     private static final Presence instance = new Presence();
     private static Map<Project, Long> projects = new HashMap<>();
 
+    private final String applicationKey;
     private final String versionName;
     private final String fullVersion;
     private final String apiVersion;
     private final String build;
     private Project currentProject = null;
     private long startTimeStamp;
+    private String file = "";
+    private String fileType = "";
+    private String fileTypeKey;
 
     private Presence() {
-        this.versionName = ApplicationInfo.getInstance().getVersionName();
-        this.fullVersion = ApplicationInfo.getInstance().getFullVersion();
-        this.apiVersion = ApplicationInfo.getInstance().getApiVersion();
-        this.build = ApplicationInfo.getInstance().getBuild().asString();
+        applicationKey = ApplicationInfo.getInstance().getBuild().asString().substring(0, 2).toLowerCase();
+        versionName = ApplicationInfo.getInstance().getVersionName();
+        fullVersion = ApplicationInfo.getInstance().getFullVersion();
+        apiVersion = ApplicationInfo.getInstance().getApiVersion();
+        build = ApplicationInfo.getInstance().getBuild().asString();
+    }
+
+    public boolean hasFile() {
+        return (this.file != null && !this.file.isEmpty());
+    }
+
+    public boolean hasCurrentProject() {
+        return this.currentProject != null;
     }
 
     public static Presence getInstance(){
@@ -75,7 +88,57 @@ public class Presence {
         return currentProject;
     }
 
+    public String getProjectName() {
+        return currentProject != null ? currentProject.getName() : "";
+    }
+
     public String getApplication() {
         return ApplicationInfo.getInstance().getVersionName();
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file, String fileType) {
+        this.file = file;
+        setFileType(fileType.split("\\s|\\.|/")[0]);
+    }
+
+    public void clearFile() {
+        this.file = "";
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+        this.fileTypeKey = fileType.toLowerCase().replaceAll("#", "sharp").replaceAll("\\+", "p");
+    }
+
+    public void clearFileType() {
+        setFileType("");
+    }
+
+    public String getFileTypeString() {
+        return String.format("Editing a %s file", getFileType());
+    }
+
+    public String getFileTypeKey() {
+        return fileTypeKey;
+    }
+
+    public void setFileTypeKey(String fileTypeKey) {
+        this.fileTypeKey = fileTypeKey;
+    }
+
+    public String getApplicationText() {
+        return String.format("Using %s", getVersionName());
+    }
+
+    public String getApplicationKey() {
+        return applicationKey;
     }
 }

@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Slack;
+package com.tsunderebug.discordintellij.slack;
 
 import com.google.api.client.auth.oauth2.*;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -21,8 +21,8 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Collections;
 
-import static com.tsunderebug.discordintellij.Slack.SlackAPIKeys.SLACK_OAUTH_CLIENT_ID;
-import static com.tsunderebug.discordintellij.Slack.SlackAPIKeys.SLACK_OAUTH_CLIENT_SECRET;
+import static com.tsunderebug.discordintellij.slack.SlackAPIKeys.SLACK_OAUTH_CLIENT_ID;
+import static com.tsunderebug.discordintellij.slack.SlackAPIKeys.SLACK_OAUTH_CLIENT_SECRET;
 
 public class SlackOAuth {
     private static final Logger LOGGER = com.intellij.openapi.diagnostic.Logger

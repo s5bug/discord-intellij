@@ -1,10 +1,8 @@
 package com.tsunderebug.discordintellij;
 
-import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent;
 import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
 
 public class FileChange implements FileEditorManagerListener {
 
@@ -14,19 +12,9 @@ public class FileChange implements FileEditorManagerListener {
         Presence presence = Presence.getInstance();
 
         if(e.getNewFile() != null) {
-            VirtualFile file = e.getNewFile();
-            String name = file.getFileType().getDescription().split("\\s|\\.|/")[0];
-            String lowercaseName = name.toLowerCase().replaceAll("#", "sharp").replaceAll("\\+", "p");
-            String ide = ApplicationInfo.getInstance().getBuild().asString().substring(0, 2).toLowerCase();
-
-            presence.setState(String.format("Working on %s", e.getManager().getProject().getName()));
-            presence.setLargeImageKey(lowercaseName);
-            presence.setLargeImageText(String.format("Editing a %s file", name));
-            presence.setSmallImageKey(ide);
-            presence.setSmallImageText(String.format("Using %s", ApplicationInfo.getInstance().getVersionName()));
-            presence.setDetails(String.format("Editing [%s] %s", name, file.getName()));
-            presence.setStartTimeStamp(project);
+            presence.setFile(e.getNewFile().getName(), e.getNewFile().getFileType().getDescription());
         } else {
+            presence.clearFile();
             new ProjectChange().runActivity(project);
         }
 

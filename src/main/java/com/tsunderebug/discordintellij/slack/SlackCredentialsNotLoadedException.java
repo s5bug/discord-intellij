@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Slack;
+package com.tsunderebug.discordintellij.slack;
 
 public class SlackCredentialsNotLoadedException extends Throwable {
     public SlackCredentialsNotLoadedException(Throwable e) {

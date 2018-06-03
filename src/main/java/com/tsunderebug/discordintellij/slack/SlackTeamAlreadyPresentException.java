@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Slack;
+package com.tsunderebug.discordintellij.slack;
 
 public class SlackTeamAlreadyPresentException extends IllegalArgumentException {
     public SlackTeamAlreadyPresentException(String teamName) {

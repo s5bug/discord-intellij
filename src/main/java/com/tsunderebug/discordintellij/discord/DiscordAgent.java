@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Discord;
+package com.tsunderebug.discordintellij.discord;
 
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
@@ -8,7 +8,7 @@ import com.intellij.ide.util.PropertiesComponent;
 import com.tsunderebug.discordintellij.Presence;
 import com.tsunderebug.discordintellij.PresenceAgent;
 
-import static com.tsunderebug.discordintellij.Discord.DiscordAPIKeys.DISCORD_CLIENT_ID;
+import static com.tsunderebug.discordintellij.discord.DiscordAPIKeys.DISCORD_CLIENT_ID;
 
 public class DiscordAgent extends PresenceAgent {
     public static final String DISCORD_PRESENCE_ENABLED = "presence.discord.enabled";
@@ -60,13 +60,28 @@ public class DiscordAgent extends PresenceAgent {
 
     private DiscordRichPresence getPresence(Presence presence) {
         DiscordRichPresence drp = new DiscordRichPresence();
-        drp.state = String.format("In %s %s", presence.getVersionName(), presence.getFullVersion());
-        drp.details = presence.getApiVersion();
-        drp.largeImageKey = presence.getBuild().substring(0, 2).toLowerCase();
-        drp.largeImageText = presence.getVersionName();
-        drp.smallImageKey = SMALL_IMAGE_KEY;
-        drp.smallImageText = SMALL_IMAGE_TEXT;
-        drp.startTimestamp = presence.getStartTimeStamp();
+
+        if (presence.hasFile()) {
+            drp.largeImageKey = presence.getFileTypeKey();
+            drp.largeImageText = presence.getFileTypeString();
+            drp.smallImageKey = presence.getApplicationKey();
+            drp.smallImageText = presence.getApplicationText();
+            drp.state = String.format("Working on %s", presence.getProjectName());
+            drp.details = String.format("Editing [%s] %s", presence.getFileType(), presence.getFile());
+        } else {
+            drp.smallImageKey = SMALL_IMAGE_KEY;
+            drp.smallImageText = SMALL_IMAGE_TEXT;
+            drp.largeImageKey = presence.getApplicationKey();
+            drp.largeImageText = presence.getVersionName();
+            drp.details = presence.getApiVersion();
+            drp.startTimestamp = presence.getStartTimeStamp();
+            if (presence.hasCurrentProject()) {
+                drp.state = String.format("Opened %s", presence.getProjectName());
+            } else {
+                drp.state = String.format("In %s %s", presence.getVersionName(), presence.getFullVersion());
+            }
+        }
+
         return drp;
     }
 }

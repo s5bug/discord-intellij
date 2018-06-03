@@ -1,4 +1,4 @@
-package com.tsunderebug.discordintellij.Discord;
+package com.tsunderebug.discordintellij.discord;
 
 import com.intellij.ide.util.PropertiesComponent;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import static com.tsunderebug.discordintellij.Discord.DiscordAgent.DISCORD_PRESENCE_ENABLED;
+import static com.tsunderebug.discordintellij.discord.DiscordAgent.DISCORD_PRESENCE_ENABLED;
 
 public class DiscordConfigurableGUI implements ItemListener {
     private JPanel discordEnabled;
