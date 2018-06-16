@@ -17,8 +17,5 @@ public class FileChange implements FileEditorManagerListener {
             presence.clearFile();
             new ProjectChange().runActivity(project);
         }
-
-        AgentManager.getAgents().forEach((agent) -> agent.show(Presence.getInstance()));
 	}
-
 }

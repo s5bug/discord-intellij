@@ -12,7 +12,7 @@ public class StartupShutdown implements ApplicationComponent {
             @Override
             public void run() {
                 AgentManager.getAgents().forEach(PresenceAgent::init);
-                AgentManager.getAgents().forEach((agent) -> agent.show(Presence.getInstance()));
+                AgentManager.getAgents().forEach((agent) -> agent.show());
             }
         });
 	}

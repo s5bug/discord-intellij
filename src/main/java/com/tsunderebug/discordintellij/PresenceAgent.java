@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project;
 
 import java.util.ArrayList;
 
-public abstract class PresenceAgent {
+public abstract class PresenceAgent implements PresenceChangeListener {
     private static ArrayList<Class<? extends PresenceAgent>> agentClasses = new ArrayList<>();
 
     private boolean initialized = false;
@@ -15,6 +15,7 @@ public abstract class PresenceAgent {
     private Project currentProject = null;
 
     protected PresenceAgent(TogglePresence togglePresence) {
+        Presence.registerAgent(this);
         this.togglePresence = togglePresence;
     }
 
@@ -39,7 +40,7 @@ public abstract class PresenceAgent {
     public abstract void initializeAgent();
     public abstract String getName();
 
-    public abstract void showPresence(Presence presence);
+    public abstract void showPresence();
 
     public abstract void hidePresence();
 
@@ -68,9 +69,9 @@ public abstract class PresenceAgent {
         return togglePresence.getActive(getCurrentProject()).isActive();
     }
 
-    public void show(Presence presence) {
+    public void show() {
         if (isActive() && initialized) {
-            showPresence(presence);
+            showPresence();
         }
     }
 
@@ -84,14 +85,6 @@ public abstract class PresenceAgent {
         if (isActive() && initialized) {
             initialized = false;
             stopAgent();
-        }
-    }
-
-    public void update() {
-        if (isActive()) {
-            showPresence(Presence.getInstance());
-        } else {
-            hidePresence();
         }
     }
 

@@ -28,6 +28,9 @@ public class SlackAgent extends PresenceAgent {
     }
 
     private final SlackOAuth oauth;
+    private SlackStatus slackStatus = new SlackStatus();
+    private SlackStatus clearStatus = new ClearStatus();
+
 
     @SuppressWarnings("WeakerAccess")
     public SlackAgent() {
@@ -59,17 +62,12 @@ public class SlackAgent extends PresenceAgent {
         return (teamMembers != null && !teamMembers.isEmpty());
     }
 
-    public static void setEnabled(boolean enabled) {
+    static void setEnabled(boolean enabled) {
         setEnabled(enabled, SlackAgent.class);
     }
 
-    public static Set<SlackTeamMember> getTeams() {
+    static Set<SlackTeamMember> getTeams() {
         return teamMembers.keySet();
-    }
-
-    private static String jsonifySlackStatus(String statusText, String statusEmoji) throws UnsupportedEncodingException {
-        Gson gson = new GsonBuilder().create();
-        return URLEncoder.encode(gson.toJson(new SlackStatus(statusText, statusEmoji)), "UTF-8");
     }
 
     @Override
@@ -83,16 +81,12 @@ public class SlackAgent extends PresenceAgent {
         } catch (SlackCredentialsNotLoadedException e) {
             LOG.warn(e);
         }
-
     }
 
     @Override
-    public void showPresence(Presence presence) {
+    public void showPresence() {
         try {
-
-            String statusText = SlackUtil.tokenizeStatus(presence);
-            String profile = jsonifySlackStatus(statusText, ":intellij_idea:");
-            postAllStatus(profile);
+            postAllStatus(slackStatus);
         } catch (IOException e) {
             LOG.error("Unable to encode slack presence.", e);
         }
@@ -101,10 +95,8 @@ public class SlackAgent extends PresenceAgent {
 
     @Override
     public void hidePresence() {
-        String profile;
         try {
-            profile = jsonifySlackStatus("", "");
-            postAllStatus(profile);
+            postAllStatus(clearStatus);
         } catch (IOException e) {
             LOG.error("Unable to clear slack presence.", e);
         }
@@ -120,7 +112,7 @@ public class SlackAgent extends PresenceAgent {
         hidePresence();
     }
 
-    public Optional<SlackTeamMember> addTeam() {
+    Optional<SlackTeamMember> addTeam() {
         SlackTeamMember teamMember = null;
 
         try {
@@ -134,7 +126,7 @@ public class SlackAgent extends PresenceAgent {
         return Optional.ofNullable(teamMember);
     }
 
-    public void removeTeam(SlackTeamMember team) {
+    void removeTeam(SlackTeamMember team) {
         teamMembers.remove(team);
         oauth.removeCredential(team);
         persistTeamMembers();
@@ -146,14 +138,14 @@ public class SlackAgent extends PresenceAgent {
                 teamMembers.keySet().stream().map(SlackTeamMember::toShortString).toArray(String[]::new));
     }
 
-    private void postAllStatus(String profile) throws IOException {
+    private void postAllStatus(SlackStatus status) throws IOException {
         IOException storedException = null;
 
         for (SlackTeamMember member : teamMembers.keySet()) {
             Credential credential = teamMembers.get(member);
             if (credential != null) {
                 try {
-                    postStatus(profile, credential);
+                    postStatus(status, credential);
                 } catch (IOException e) {
                     storedException = e;
                 }
@@ -164,7 +156,7 @@ public class SlackAgent extends PresenceAgent {
         }
     }
 
-    private void postStatus(String profile, Credential credential) throws IOException {
+    private void postStatus(SlackStatus status, Credential credential) throws IOException {
         String url = "https://slack.com/api/users.profile.set";
         URL obj = new URL(url);
         HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
@@ -177,7 +169,7 @@ public class SlackAgent extends PresenceAgent {
         );
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-        String urlParameters = "token=" + credential.getAccessToken() + "&profile=" + profile;
+        String urlParameters = "token=" + credential.getAccessToken() + "&profile=" + status.toJson();
 
         // Send post request
         con.setDoOutput(true);
@@ -198,23 +190,66 @@ public class SlackAgent extends PresenceAgent {
         }
         in.close();
 
-        if (responseCode != HttpURLConnection.HTTP_OK) {
-            LOG.error("Status " + responseCode + " posting slack presence.", response.toString());
+        if (responseCode != HttpURLConnection.HTTP_OK || response.indexOf("error") != -1) {
+            LOG.error("Error posting Slack status\nResponse " + responseCode + ".", response.toString());
         }
     }
 
-    private static class SlackStatus {
-        private String status_text;
-        private String status_emoji;
+    @Override
+    public void projectChanged(Presence presence) {
+        if (presence.hasCurrentProject()) {
+            slackStatus.setProject(presence.getProjectName());
+        } else {
+            slackStatus.clearProject(presence.getVersionName());
+        }
+        show();
+    }
 
-        SlackStatus(String status_text, String statis_emoji) {
-            this.status_text = status_text;
-            this.status_emoji = statis_emoji;
+    @Override
+    public void fileChanged(Presence presence) {
+        if (presence.hasFile()) {
+            slackStatus.setFile(presence.getFile(), presence.getProjectName());
+        }
+        show();
+    }
+
+    private static class SlackStatus {
+        String status_text;
+        String status_emoji;
+
+        SlackStatus() {
+            status_emoji = ":intellij_idea:"; // TODO
+            status_text = "Opened Intellij IDEA"; //TODO
+        }
+
+        public void setProject(String project) {
+            status_text = String.format("Opened %s", project);
+        }
+
+        void clearProject(String version) {
+            status_text = String.format("Using %s", version);
+        }
+
+        void setFile(String file, String project) {
+            status_text = String.format("Editing %s in %s", file, project);
         }
 
         @Override
         public String toString() {
             return status_text + " - " + status_emoji;
+        }
+
+        private String toJson() throws UnsupportedEncodingException {
+            Gson gson = new GsonBuilder().create();
+            return URLEncoder.encode(gson.toJson(this), "UTF-8");
+        }
+
+    }
+
+    private static class ClearStatus extends SlackStatus {
+        ClearStatus() {
+            this.status_emoji = "";
+            this.status_text = "";
         }
     }
 }

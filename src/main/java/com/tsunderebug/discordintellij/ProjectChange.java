@@ -16,8 +16,7 @@ public class ProjectChange implements StartupActivity {
 
         AgentManager.getAgents().forEach(agent -> {
             agent.setCurrentProject(project);
-            agent.show(Presence.getInstance());
+            agent.show();
         });
 	}
-
 }

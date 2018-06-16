@@ -42,7 +42,7 @@ public abstract class TogglePresence extends ToggleAction {
         presence.setActive(state);
         if (agent.isPresent()) {
             actionEvent.getPresentation().setText(String.format("%s %s", presence.isActive() ? DISABLE_TEXT : ENABLE_TEXT, agent.get().getName()));
-            agent.get().update();
+//            agent.get().update();
         }
     }
 

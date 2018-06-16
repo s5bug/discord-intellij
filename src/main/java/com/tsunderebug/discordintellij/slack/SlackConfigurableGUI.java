@@ -6,7 +6,6 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.ui.components.JBList;
 import com.tsunderebug.discordintellij.AgentManager;
-import com.tsunderebug.discordintellij.Presence;
 import com.tsunderebug.discordintellij.PresenceAgent;
 
 import javax.swing.*;
@@ -48,7 +47,7 @@ public class SlackConfigurableGUI {
                         Optional<SlackTeamMember> team = slackAgent.addTeam();
                         team.ifPresent(teams::addElement);
                         SlackAgent.setEnabled(true);
-                        slackAgent.show(Presence.getInstance());
+                        slackAgent.show();
                     });
 
         });

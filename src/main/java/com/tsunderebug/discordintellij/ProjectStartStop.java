@@ -36,7 +36,7 @@ public class ProjectStartStop implements ProjectComponent {
 
         AgentManager.getAgents().forEach(agent -> {
             agent.setCurrentProject(project);
-            agent.show(Presence.getInstance());
+            agent.show();
         });
     }
 
